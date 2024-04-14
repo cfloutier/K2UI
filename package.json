@@ -1,0 +1,20 @@
+{
+  "name": "K2UI",
+  "version": "1.0.0",
+  "displayName": "UITK Controls used by K2D2 mod",
+  "description": "This package contains assets and controls for creating UIs using the K2D2 set of controls.",
+  "unity": "2022.3",
+  "unityRelease": "5f1",
+  "documentationUrl": "https://github.com/cfloutier/K2UI.git",
+  "licensesUrl": "https://github.com/cfloutier/K2UI/blob/main/LICENSE",
+  "hideInEditor": false,
+  "keywords": [
+    "ui",
+    "ksp",
+    "mods",
+    "UITK"
+  ],
+  "author": {
+    "name": "cfloutier"
+  }
+}
