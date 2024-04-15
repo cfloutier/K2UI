@@ -36,4 +36,6 @@ https://github.com/cfloutier/test_k2ui is the test project I use to test and bui
 You can use it as a simple example on how the controls are used and linked. 
 All control have it's own little test among the differents tabs.
 
+see the wiki : https://github.com/cfloutier/K2UI/wiki for a description of each control
+
 
