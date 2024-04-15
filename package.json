@@ -1,5 +1,5 @@
 {
-  "name": "K2UI",
+  "name": "k2ui.controls",
   "version": "1.0.0",
   "displayName": "UITK Controls used by K2D2 mod",
   "description": "This package contains assets and controls for creating UIs using the K2D2 set of controls.",
