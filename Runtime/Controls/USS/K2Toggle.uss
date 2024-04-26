@@ -26,6 +26,7 @@
     height: 18px;
     transition-property: background-color;
     transition-duration: 0.2s;
+    translate: 0 -3px;
 }
 
 .slide-toggle__input-knob {
