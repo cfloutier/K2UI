@@ -28,9 +28,11 @@ namespace KTools
             }
         }
 
-        static public void Init(MonoBehaviour main, string file_path)
+        static public void Init(MonoBehaviour main, string file_path, bool auto_save = true)
         {
-            Instance.Load(main, file_path);
+            Instance.Load(file_path);
+            if (auto_save)
+                main.StartCoroutine(Instance.SaveIfNeeded());
         }
 
         public List<IResettable> reset_register = new();
@@ -54,7 +56,7 @@ namespace KTools
 
         public event onLoaded onloaded_event;
 
-        protected void Load(MonoBehaviour main, string file_path)
+        public void Load(string file_path)
         {
             this.file_path = file_path;
             var previous_culture = Thread.CurrentThread.CurrentCulture;
@@ -70,8 +72,7 @@ namespace KTools
 
             Thread.CurrentThread.CurrentCulture = previous_culture;
             loaded = true;
-            onloaded_event?.Invoke();
-            main.StartCoroutine(SaveIfNeeded());
+            onloaded_event?.Invoke();    
         }
 
         IEnumerator SaveIfNeeded()
@@ -86,7 +87,7 @@ namespace KTools
             }
         }
 
-        protected void Save()
+        public void Save()
         {
             // Debug.Log("settings saved");
             

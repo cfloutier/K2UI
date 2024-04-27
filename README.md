@@ -27,7 +27,7 @@ and add the line in the modules definition
 and checks that everything is ok (no compilation trouble)
 
 -------------
-Success, you use the K2D2 controls
+Success, you can use the K2D2 controls
 
 ## Create Your first Test UI
 

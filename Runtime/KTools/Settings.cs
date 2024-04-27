@@ -6,7 +6,6 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-using Newtonsoft.Json;
 using K2UI;
 using System.Globalization;
 
@@ -14,90 +13,28 @@ namespace KTools
 {
     public interface IResettable
     {
-        void Reset(string path);
+        /// <summary>
+        /// Reset the setting using the default value.
+        /// The base_key is used to limit the reset to all keys starting with this base_key 
+        /// </summary>
+        /// <param name="base_key"></param>
+        void Reset(string base_key);
     }
-
-    public class EnumSetting <TEnum> : IResettable where TEnum : struct
-    {
-        public string path;
-        TEnum default_value;
-        public EnumSetting(string path, TEnum default_value)
-        {
-            this.path = path;
-            this.default_value = default_value;
-            if (SettingsFile.Instance.loaded)
-                loadValue();
-            else
-                SettingsFile.Instance.onloaded_event += loadValue;
-
-            if (!string.IsNullOrEmpty(path))    
-                SettingsFile.Instance.reset_register.Add(this);
-        }
-
-        public void Reset(string path = null)
-        {
-            if (path != null)
-                if (!this.path.StartsWith(path))
-                    return;
-                
-            this.V = default_value;
-        }
-
-        void loadValue()
-        {
-            _value = SettingsFile.Instance.GetEnum<TEnum>(path, default_value);
-        }
-
-        TEnum _value;
-
-        public TEnum V
-        {
-            get { return _value; }
-            set
-            {
-                if (value.Equals(_value)) return;
-
-                _value = value;
-                listeners?.Invoke(this.V);
-
-                SettingsFile.Instance.SetEnum<TEnum>(path, _value);
-            }
-        }
-
-        public int int_value
-        {
-            get { return (int)(object) V;}
-            set { _value = (TEnum)(object) value;}
-        }
-
-        public delegate void onChanged(TEnum value);
-
-        public event onChanged listeners;
-
-        // add listener and call it once
-        public void listen(onChanged listener)
-        {
-            
-            listeners+= listener;
-            listener(V);
-        }
-    }
-
     public class Setting<T> : IResettable
     {
         public string key;
         T default_value;
 
-        public Setting(string path, T default_value)
+        public Setting(string key, T default_value)
         {
-            this.key = path;
+            this.key = key;
             this.default_value = default_value; 
             if (SettingsFile.Instance.loaded)
                 loadValue();
             else
                 SettingsFile.Instance.onloaded_event += loadValue;
 
-            if (!string.IsNullOrEmpty(path))    
+            if (!string.IsNullOrEmpty(key))    
                 SettingsFile.Instance.reset_register.Add(this);
         }
 
@@ -113,8 +50,6 @@ namespace KTools
         void loadValue()
         {
             _value = SettingsFile.Instance.Get<T>(key, default_value);
-            // if (path == "lift.end_ascent_pc")
-            //     Debug.Log("load value" + _value);
         }
 
         T _value;
@@ -131,8 +66,6 @@ namespace KTools
                         return;
 
                 _value = value;
-                // if (path == "lift.end_ascent_pc")
-                //     Debug.Log("set value" + _value);
                 listeners?.Invoke(this.V); 
             }
         }
@@ -172,7 +105,7 @@ namespace KTools
             }
         }
         
-        public ClampSetting(string path, T default_value, T min, T max): base(path, default_value)
+        public ClampSetting(string key, T default_value, T min, T max): base(key, default_value)
         {
             this._min = min;
             this._max = max;  
@@ -188,7 +121,7 @@ namespace KTools
         }
     }
 
-    public class ClampedSettingInt : Setting<int>
+    public class ClampSettingInt : Setting<int>
     {
         
         int _min;
@@ -211,7 +144,7 @@ namespace KTools
             }
         }
 
-        public ClampedSettingInt(string path, int default_value, int min, int max): base(path, default_value)
+        public ClampSettingInt(string key, int default_value, int min, int max): base(key, default_value)
         {
             this.min = min;
             this.max = max;     
@@ -233,6 +166,73 @@ namespace KTools
             set {
                 base.V = clamp(value);
             } 
+        }
+    }
+
+
+    public class EnumSetting <TEnum> : IResettable where TEnum : struct
+    {
+        public string key;
+        TEnum default_value;
+        public EnumSetting(string key, TEnum default_value)
+        {
+            this.key = key;
+            this.default_value = default_value;
+            if (SettingsFile.Instance.loaded)
+                loadValue();
+            else
+                SettingsFile.Instance.onloaded_event += loadValue;
+
+            if (!string.IsNullOrEmpty(key))    
+                SettingsFile.Instance.reset_register.Add(this);
+        }
+
+        public void Reset(string path = null)
+        {
+            if (path != null)
+                if (!this.key.StartsWith(path))
+                    return;
+                
+            this.V = default_value;
+        }
+
+        void loadValue()
+        {
+            _value = SettingsFile.Instance.GetEnum<TEnum>(key, default_value);
+        }
+
+        TEnum _value;
+
+        public TEnum V
+        {
+            get { return _value; }
+            set
+            {
+                if (value.Equals(_value)) return;
+
+                _value = value;
+                listeners?.Invoke(this.V);
+
+                SettingsFile.Instance.SetEnum<TEnum>(key, _value);
+            }
+        }
+
+        public int int_value
+        {
+            get { return (int)(object) V;}
+            set { _value = (TEnum)(object) value;}
+        }
+
+        public delegate void onChanged(TEnum value);
+
+        public event onChanged listeners;
+
+        // add listener and call it once
+        public void listen(onChanged listener)
+        {
+            
+            listeners+= listener;
+            listener(V);
         }
     }
 
