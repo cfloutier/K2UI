@@ -11,9 +11,9 @@ using K2UI.Compas;
 
 namespace K2UI
 {
-    public class K2Compass : VisualElement
+    public class K2Compas : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<K2Compass, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2Compas, UxmlTraits> { }
 
         public new class UxmlTraits : VisualElement.UxmlTraits
         {
@@ -29,7 +29,7 @@ namespace K2UI
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                K2Compass k2_compas = (K2Compass)ve;
+                K2Compas k2_compas = (K2Compas)ve;
 
                 k2_compas.value = m_Value.GetValueFromBag(bag, cc);
                 k2_compas.AngleRange = m_AngleRange.GetValueFromBag(bag, cc);
@@ -102,7 +102,7 @@ namespace K2UI
         VisualElement el_texts;
         VisualElement el_shadow;
 
-        public K2Compass()
+        public K2Compas()
         {
             // Debug.Log("name:" + this.name);
             AddToClassList("k2compas");
@@ -133,7 +133,7 @@ namespace K2UI
 
         void CustomStylesResolved(CustomStyleResolvedEvent evt)
         {
-            K2Compass element = (K2Compass)evt.currentTarget;
+            K2Compas element = (K2Compas)evt.currentTarget;
             element.UpdateCustomStyles();
         }
 
@@ -357,7 +357,7 @@ namespace K2UI
             painter.Stroke();
         }
 
-        public K2Compass Bind(Setting<float> setting)
+        public K2Compas Bind(Setting<float> setting)
         {
             this.value = setting.V;
             setting.listeners += v => this.value = v;

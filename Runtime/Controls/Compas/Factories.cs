@@ -24,7 +24,7 @@ namespace K2UI.Compas
             }
         }
 
-        public Button buttonPool(int angle, K2Compass compass, string text, Vector2 pos)
+        public Button buttonPool(int angle, K2Compas compass, string text, Vector2 pos)
         {
             Button button = null;
 

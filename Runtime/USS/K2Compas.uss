@@ -39,14 +39,14 @@
     overflow: hidden;
     position: absolute;
     -unity-background-image-tint-color: rgba(0, 0, 0, 0.95);
-    background-image: url('project://database/Assets/Runtime/K2UI/Runtime/Controls/USS/Images/shadow.png?fileID=2800000&guid=55836c4f1d2c90c48a7d03ee61ca1c32&type=3#shadow');
+    background-image: url('project://database/Assets/Runtime/K2UI/Assets/Images/shadow.png?fileID=2800000&guid=55836c4f1d2c90c48a7d03ee61ca1c32&type=3#shadow');
 }
 
 .k2compas .big_text {
     position: absolute;
     -unity-text-align: lower-center;
     padding: 0;
-    -unity-font-definition: url('project://database/Assets/Runtime/K2UI/Assets/Fonts/ArialRounded.asset');
+    -unity-font-definition: url('project://database/Assets/Runtime/K2UI/Assets/Fonts/ArialRounded.asset?fileID=11400000&guid=7a6947395299c6045a727a85a9fc20f9&type=2#ArialRounded');
     font-size: 19px;
     width: 0;
     height: 0;
@@ -63,7 +63,7 @@
     height: 11px;
     width: 0;
     padding: 0;
-    -unity-font-definition: url('project://database/Assets/Runtime/K2UI/Assets/Fonts/LiberationSans-Bold%20SDF.asset');
+    -unity-font-definition: none;
     font-size: 10px;
     padding-bottom: 7px;
     min-width: 0;
