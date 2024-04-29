@@ -3,61 +3,13 @@ using UnityEngine.UIElements;
 using System.Collections.Generic;
 
 namespace K2UI.Tabs
-{
-     
+{   
     /// <summary>
-    /// a simple visual element just used to contains label and icon
+    /// K2TabButton have two states : active (showing current content) and lighted (pilot is on)
     /// </summary>
-    public class TabPage : VisualElement
+    public class K2TabButton : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<TabPage, UxmlTraits> { }
-
-        // Add the two custom UXML attributes.
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-            UxmlStringAttributeDescription m_Label =
-                new() { name = "label", defaultValue = "My Tab" };
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-                var ate = ve as TabPage;
-
-                ate.label = m_Label.GetValueFromBag(bag, cc);
-               
-            }
-        }
-
-        public string _label;
-        public string label
-        {
-            get { return _label; }
-            set { 
-                    if (value == _label) return;
-                    _label = value; 
-                    
-                    if (tab_button != null)
-                    {
-                        tab_button.label = label;
-                    }
-                }
-        }
-
-        public TabButton tab_button;
-        public void setButton(TabButton bt)
-        {
-            bt.label = label;
-            bt.name = name;
-        }
-    }
-
-
-    /// <summary>
-    /// TabButton have two states : active (showing current content) and lighted (pilot is on)
-    /// </summary>
-    public class TabButton : VisualElement
-    {
-        public new class UxmlFactory : UxmlFactory<TabButton, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2TabButton, UxmlTraits> { }
 
         // Add the two custom UXML attributes.
         public new class UxmlTraits : VisualElement.UxmlTraits
@@ -72,7 +24,7 @@ namespace K2UI.Tabs
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var ate = ve as TabButton;
+                var ate = ve as K2TabButton;
 
                 ate.label = m_Label.GetValueFromBag(bag, cc);
                 ate.Active = m_Active.GetValueFromBag(bag, cc);
@@ -121,7 +73,7 @@ namespace K2UI.Tabs
             }
         }
 
-        // In the spirit of the BEM standard, the TabButton has its own block class and two element classes. It also
+        // In the spirit of the BEM standard, the K2TabButton has its own block class and two element classes. It also
         // has a class that represents the enabled state of the toggle.
         public static readonly string ussClassName = "k2-tab-button";
         public static readonly string activeUss = ussClassName+"--active";
@@ -134,7 +86,7 @@ namespace K2UI.Tabs
         VisualElement el_light;
         
         // This constructor allows users to set the contents of the label.
-        public TabButton()
+        public K2TabButton()
         {
             el_light = new VisualElement();
             el_light.name = "tab_light";

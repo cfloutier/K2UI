@@ -5,14 +5,14 @@ using System.Runtime.ExceptionServices;
 
 namespace K2UI.Tabs
 {
-    class TabsBar : VisualElement
+    class K2TabsBar : VisualElement
     {
-        public TabsBar()
+        public K2TabsBar()
         {
             AddToClassList("k2-tabsbar");   
         }    
 
-        public new class UxmlFactory : UxmlFactory<TabsBar, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2TabsBar, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits
         {
             public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
@@ -20,7 +20,7 @@ namespace K2UI.Tabs
                 get
                 {
                     // we can add only tabButton here
-                    yield return new UxmlChildElementDescription(typeof(TabButton));
+                    yield return new UxmlChildElementDescription(typeof(K2TabButton));
                 }
             }
 
@@ -31,7 +31,7 @@ namespace K2UI.Tabs
             {
                 base.Init(ve, bag, cc);
 
-                var ate = ve as TabsBar;
+                var ate = ve as K2TabsBar;
 
                 ate.openedIndex = m_OpenedIndex.GetValueFromBag(bag, cc);
                 ate.updateList();
@@ -45,13 +45,13 @@ namespace K2UI.Tabs
             set { _openedIndex = value; UpdateState(); }
         }
 
-        public List<TabButton> list_tabs;
+        public List<K2TabButton> list_tabs;
 
         private void onChanged(ChangeEvent<bool> evt)
         {
             VisualElement target = evt.target as VisualElement;
 
-            if (target.GetType() != typeof(TabButton))
+            if (target.GetType() != typeof(K2TabButton))
                 return;
 
             evt.StopPropagation();
@@ -61,7 +61,7 @@ namespace K2UI.Tabs
                 // click on a tab
                 var previousValue = openedIndex;
 
-                openedIndex = list_tabs.IndexOf(evt.target as TabButton);
+                openedIndex = list_tabs.IndexOf(evt.target as K2TabButton);
                 // Debug.Log($"index {openedIndex}");
                 if (previousValue != openedIndex)
                 {
@@ -79,11 +79,6 @@ namespace K2UI.Tabs
             // Debug.Log($"evt {evt.target}");
         }
 
-        
-
-
-
-
         public void updateList()
         {
             // Debug.Log("updateList");
@@ -95,7 +90,7 @@ namespace K2UI.Tabs
                 }
             }
 
-            list_tabs = this.Query<TabButton>().ToList();
+            list_tabs = this.Query<K2TabButton>().ToList();
             // openedIndex = -1;
             UpdateState();
 

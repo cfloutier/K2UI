@@ -10,12 +10,12 @@ using KTools;
 namespace K2UI.Tabs
 {
     /// <summary>
-    /// K2Pages are classes added by the TabbedPage user. 
+    /// K2Pages are classes added by the K2TabsView user. 
     /// each one is mapped to the proper root VisualElement 
     /// in the #content, found by it's #name == code
-    /// a TabButton must be added to the #buttons 
+    /// a K2TabButton must be added to the #buttons 
     /// 
-    /// create an overriden class and add it to the TabbedPage in the Init fct
+    /// create an overriden class and add it to the K2TabsView in the Init fct
     /// </summary>
     [System.Serializable]
     public class K2Page
@@ -23,16 +23,16 @@ namespace K2UI.Tabs
         public string code;
 
         // the main panel (including page and settings)
-        public TabPage panel;
+        public K2PageElement panel;
 
         // the settings page if found
         public VisualElement settings_page;
         // the main page if found
         public VisualElement main_page;
 
-        public TabButton tab_button;
+        public K2TabButton tab_button;
 
-        TabbedPage tabbed_page;
+        K2TabsView tabbed_page;
 
         public K2Page()
         {
@@ -41,16 +41,16 @@ namespace K2UI.Tabs
 
         public bool Init(VisualElement buttons, VisualElement panels)
         {
-            tabbed_page = panels.GetFirstAncestorOfType<TabbedPage>();
+            tabbed_page = panels.GetFirstAncestorOfType<K2TabsView>();
 
-            tab_button = buttons.Q<TabButton>(code);
+            tab_button = buttons.Q<K2TabButton>(code);
             if (tab_button == null)
             {
-                Debug.LogError("missing TabButton with name " + code);
+                Debug.LogError("missing K2TabButton with name " + code);
                 return false;
             }
 
-            panel = panels.Q<TabPage>(code);
+            panel = panels.Q<K2PageElement>(code);
             if (panel == null)
             {
                 Debug.LogError("missing content with name " + code);

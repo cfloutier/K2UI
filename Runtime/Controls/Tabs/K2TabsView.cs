@@ -9,17 +9,17 @@ using KTools;
 namespace K2UI.Tabs
 {
     /// <summary>
-    /// TabbedPage is the main class to use tabs feature. 
+    /// K2TabsView is the main class to use tabs feature. 
     /// 
     /// It create a tabsBar that will accept tabbed buttons
     /// 
     /// It change the content in #Content element depending on the current Tab
     /// 
-    /// Adds TabButton to the Element they will be finally added in the #TabBar
+    /// Adds K2TabButton to the Element they will be finally added in the #TabBar
     /// </summary>
-    public class TabbedPage : VisualElement
+    public class K2TabsView : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<TabbedPage, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2TabsView, UxmlTraits> { }
 
         public new class UxmlTraits : VisualElement.UxmlTraits
         {
@@ -38,7 +38,7 @@ namespace K2UI.Tabs
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var ate = ve as TabbedPage;
+                var ate = ve as K2TabsView;
 
                 ate.SelectedTabName = m_SelectedTabName.GetValueFromBag(bag, cc);
             }
@@ -51,7 +51,7 @@ namespace K2UI.Tabs
             set { _selected_tab_name = value; }
         }
 
-        TabsBar tabsbar_el;
+        K2TabsBar tabsbar_el;
         VisualElement content_el;
 
         public override VisualElement contentContainer 
@@ -64,7 +64,7 @@ namespace K2UI.Tabs
             }      
         }
 
-        public TabbedPage()
+        public K2TabsView()
         {       
             Setup();
             InitializeUI();
@@ -72,7 +72,7 @@ namespace K2UI.Tabs
 
         void Setup()
         {
-            tabsbar_el = new TabsBar() {name = "TabsBar"};
+            tabsbar_el = new K2TabsBar() {name = "K2TabsBar"};
             var content = new VisualElement() {name = "Content"};
 
             Add(tabsbar_el);
@@ -94,11 +94,10 @@ namespace K2UI.Tabs
 
         }
 
-
         bool hasChanged()
         {
-            var buttons = tabsbar_el.Query<TabButton>().ToList();
-            var pages = content_el.Query<TabPage>().ToList();
+            var buttons = tabsbar_el.Query<K2TabButton>().ToList();
+            var pages = content_el.Query<K2PageElement>().ToList();
 
             if (buttons.Count != pages.Count)
                 return true;
@@ -118,10 +117,10 @@ namespace K2UI.Tabs
                 return;
 
             tabsbar_el.Clear();
-            var pages = content_el.Query<TabPage>().ToList();
+            var pages = content_el.Query<K2PageElement>().ToList();
             foreach (var page in pages)
             {
-                var bt = new TabButton();
+                var bt = new K2TabButton();
                 page.setButton(bt);
                 tabsbar_el.Add(bt);
             }
@@ -134,7 +133,7 @@ namespace K2UI.Tabs
                 return;
 
             // Debug.Log("changed "+evt.newValue);
-            ShowContent(evt.newValue);  
+            Select(evt.newValue);  
             if (!string.IsNullOrEmpty(this.setting_path))
                 SettingsFile.Instance.SetString(setting_path, evt.newValue);
         }
@@ -146,10 +145,9 @@ namespace K2UI.Tabs
             this.setting_path = setting_path;
             if (!string.IsNullOrEmpty(this.setting_path))
             {
-                ShowContent(SettingsFile.Instance.GetString(setting_path, default_tab));
+                Select(SettingsFile.Instance.GetString(setting_path, default_tab));
             }
         }
-
 
         string current_tab = "";
         public string CurrentTabCode
@@ -163,29 +161,10 @@ namespace K2UI.Tabs
             {
                 if (panel.enabled)
                 {
-                    ShowContent(panel.code);
+                    Select(panel.code);
                     return;
                 }
             }
-        }
-
-        void ShowContent(string code)
-        {
-            current_tab = code;
-            foreach (var page in content_el.Children())
-            {
-                page.Show(page.name == code);
-            }
-
-            if (panels == null)
-                return;
-
-            foreach (var panel in panels)
-            {
-                panel.isVisible = panel.code == code;    
-            }
-
-            tabsbar_el.setOpenedPage(code);
         }
 
         public void Enable(string code, bool enable)
@@ -210,17 +189,26 @@ namespace K2UI.Tabs
         public void Select(string code)
         {
             tabsbar_el.setOpenedPage(code);
-            ShowContent(code);         
+            current_tab = code;
+            foreach (var page in content_el.Children())
+            {
+                page.Show(page.name == code);
+            }
+
+            if (panels == null)
+                return;
+
+            foreach (var panel in panels)
+            {
+                panel.isVisible = panel.code == code;    
+            } 
         }
-
-
 
         public void Update()
         {
             foreach(K2Page panel in this.panels)
                 panel.onUpdateUI();
         }
-
 
     }
 }

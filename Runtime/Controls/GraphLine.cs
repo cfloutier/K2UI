@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace K2UI.Graph
 {
-    public class GraphLine : VisualElement
+    public class K2GraphLine : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<GraphLine, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2GraphLine, UxmlTraits> { }
 
         // Add the two custom UXML attributes.
         public new class UxmlTraits : VisualElement.UxmlTraits
@@ -36,7 +36,7 @@ namespace K2UI.Graph
             public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                var ate = ve as GraphLine;
+                var ate = ve as K2GraphLine;
                 ate.MinX = m_MinX.GetValueFromBag(bag, cc);     
                 ate.MaxX = m_MaxX.GetValueFromBag(bag, cc);
                 ate.MinY = m_MinY.GetValueFromBag(bag, cc);
@@ -129,7 +129,7 @@ namespace K2UI.Graph
             }
 
         }
-        public GraphLine()
+        public K2GraphLine()
         {
            AddToClassList("graph-line");
            generateVisualContent += Draw;

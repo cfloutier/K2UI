@@ -5,9 +5,9 @@ using System.Runtime.ExceptionServices;
 
 namespace K2UI
 {
-    class ExFoldoutGroup : VisualElement
+    class K2FoldoutGroup : VisualElement
     {
-        public new class UxmlFactory : UxmlFactory<ExFoldoutGroup, UxmlTraits> { }
+        public new class UxmlFactory : UxmlFactory<K2FoldoutGroup, UxmlTraits> { }
         public new class UxmlTraits : VisualElement.UxmlTraits
         {
             public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
@@ -25,13 +25,13 @@ namespace K2UI
             {
                 base.Init(ve, bag, cc);
 
-                var ate = ve as ExFoldoutGroup;
+                var ate = ve as K2FoldoutGroup;
 
                 ate.openedIndex = m_OpenedIndex.GetValueFromBag(bag, cc);
             }
         }
 
-        public ExFoldoutGroup()
+        public K2FoldoutGroup()
         {
             
             RegisterCallback<AttachToPanelEvent>(onAttached);

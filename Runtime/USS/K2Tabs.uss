@@ -99,6 +99,6 @@
     border-bottom-width: 2px;
 }
 
-TabPage {
+K2PageElement {
     margin-top: 5px;
 }
